@@ -9,9 +9,6 @@ class DropzoneAreaEx extends Component {
     };
   }
   handleChange(files) {
-    // this.setState({
-    //   files: files,
-    // });
     this.props.onUpload(files[0]);
   }
   render() {
