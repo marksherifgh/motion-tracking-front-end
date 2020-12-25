@@ -12,7 +12,7 @@ class DropzoneAreaEx extends Component {
     this.props.onUpload(files[0]);
   }
   render() {
-    return <DropzoneArea onChange={this.handleChange.bind(this)} maxFileSize=52,428,800 />;
+    return <DropzoneArea onChange={this.handleChange.bind(this)} maxFileSize=52428800 />;
   }
 }
 
