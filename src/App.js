@@ -71,7 +71,7 @@ function App() {
         <TabPanel value={value} index={0}>
           <DropzoneAreaEx onUpload={handleUpload} />
           <Button
-            disabled={!analyze}
+            //disabled={!analyze}
             variant="contained"
             color="primary"
             className={classes.btn}
