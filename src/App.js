@@ -40,7 +40,6 @@ function App() {
       },
     })
       .then((res) => {
-        console.log(res.data);
         let x = [];
         let t = [];
         res.data.forEach((el) => {
@@ -48,6 +47,7 @@ function App() {
           t.push(el[1]);
         });
         setGraph({ x, t });
+        console.log(graph);
         setAnalyze(!analyze);
       })
       .catch((err) => {
