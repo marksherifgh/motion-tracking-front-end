@@ -17,7 +17,7 @@ function Graph({x,t}){
         ]
     }
     return (
-        <Container maxWidth='sm'>
+        <Container maxWidth='lg'>
             <Line
             data={state}
             options={{
