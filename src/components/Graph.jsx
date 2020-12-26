@@ -23,7 +23,7 @@ function Graph({x,t}){
             options={{
                 title:{
                 display:true,
-                text:'Displacement with time',
+                text:'Acceleration with time',
                 fontSize:20
                 },
                 legend:{
