@@ -15,7 +15,7 @@ state = {labels: this.props.t,
         }
     ]}
     handleChange = (e) => {
-        if (e.target.value == 'x'){
+        if (e.target.value === 'x'){
             const x = {labels: this.props.t,
                 datasets: [
                     {
@@ -30,7 +30,7 @@ state = {labels: this.props.t,
                 ]}
             this.setState(x);
         }
-        else if (e.target.value == 'v'){
+        else if (e.target.value === 'v'){
             const v = {
                 labels: this.props.t,
             datasets: [
@@ -47,7 +47,7 @@ state = {labels: this.props.t,
             }
             this.setState(v);
         }
-        else if (e.target.value == 'a'){
+        else if (e.target.value === 'a'){
             const a = {
                 labels: this.props.t,
                 datasets: [
