@@ -2,7 +2,10 @@ import React from 'react';
 import {Line} from 'react-chartjs-2';
 import {Container} from '@material-ui/core'
 class Graph extends React.Component{
-state = {labels: this.props.t,
+state = {
+    name: 'Displacement',
+    state : {
+    labels: this.props.t,
     datasets: [
         {
             label: this.props.x,
@@ -14,6 +17,7 @@ state = {labels: this.props.t,
             data: this.props.x
         }
     ]}
+}
     handleChange = (e) => {
         if (e.target.value === 'x'){
             const x = {labels: this.props.t,
@@ -28,7 +32,7 @@ state = {labels: this.props.t,
                         data: this.props.x
                     }
                 ]}
-            this.setState(x);
+            this.setState({name: 'Displacement', state: x});
         }
         else if (e.target.value === 'v'){
             const v = {
@@ -45,7 +49,7 @@ state = {labels: this.props.t,
                 }
             ]
             }
-            this.setState(v);
+            this.setState({name: 'Velocity', state: v});
         }
         else if (e.target.value === 'a'){
             const a = {
@@ -62,7 +66,7 @@ state = {labels: this.props.t,
                     }
                 ]
                 }
-            this.setState(a);
+            this.setState({name: 'Acceleration', state: a});
         }
     }
     render(){
@@ -74,11 +78,11 @@ state = {labels: this.props.t,
                         <option value="a">Acceleration</option>
                     </select>
                     <Line
-                        data={this.state}
+                        data={this.state.state}
                         options={{
                             title:{
                             display:true,
-                            text:'Velocity with time',
+                            text:`${this.state.name} with time`,
                             fontSize:20
                             },
                             legend:{
@@ -87,7 +91,7 @@ state = {labels: this.props.t,
                             }
                         }}
                     />
-                     </Container>
+            </Container>
             
         )   
     }
