@@ -30,9 +30,9 @@ function App() {
     console.log(file);
     const data = new FormData();
     data.append("file", file);
-    const url = "http://localhost:5000/upload";
+    const url = "https://run.mocky.io/v3/eb3937d5-f04e-4222-b61a-0a9e6f3d42d8";
     axios({
-      method: "POST",
+      method: "GET",
       url,
       data,
       headers: {
@@ -40,14 +40,18 @@ function App() {
       },
     })
       .then((res) => {
-        console.log(res.data);
         let x = [];
+        let v = [];
+        let a = [];
         let t = [];
         res.data.forEach((el) => {
           x.push(el[0]);
-          t.push(el[1]);
+          v.push(el[1]);
+          a.push(el[2]);
+          t.push(el[3]);
         });
-        setGraph({ x, t });
+        setGraph({x, v, a, t});
+        console.log(graph);
         setAnalyze(!analyze);
       })
       .catch((err) => {
@@ -71,7 +75,7 @@ function App() {
         <TabPanel value={value} index={0}>
           <DropzoneAreaEx onUpload={handleUpload} />
           <Button
-            disabled={!analyze}
+            //disabled={!analyze}
             variant="contained"
             color="primary"
             className={classes.btn}
@@ -82,7 +86,7 @@ function App() {
           {/* <CircularProgress size={24} className={classes.buttonProgress} /> */}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <Graph x={graph.x} t={graph.t} />
+          <Graph x={graph.x} v={graph.v} a={graph.a} t={graph.t} />
         </TabPanel>
       </Layout>
     </div>
