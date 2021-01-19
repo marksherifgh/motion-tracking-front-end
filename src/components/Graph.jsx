@@ -73,7 +73,7 @@ class Graph extends React.Component {
   render() {
     return (
       <Container maxWidth="lg">
-        <Select onChange={this.handleChange}>
+        <Select onChange={this.handleChange} value="x">
           <MenuItem value="x">Displacement</MenuItem>
           <MenuItem value="v">Velocity</MenuItem>
           <MenuItem value="a">Acceleration</MenuItem>
