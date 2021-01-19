@@ -7,6 +7,8 @@ import {
   Typography,
   Button,
   makeStyles,
+  Select,
+  MenuItem,
 } from "@material-ui/core";
 import TabPanel from "./components/TabPanel";
 import Layout from "./components/Layout";
@@ -15,48 +17,58 @@ import DropzoneAreaEx from "./components/DraopZoneAreaEx";
 import Form from "./components/Form";
 function App() {
   const [value, setValue] = React.useState(0);
+  const [fps, setFps] = React.useState(60);
   const [analyze, setAnalyze] = React.useState(false);
-  const [graph, setGraph] = React.useState({ x: [], t: [] });
+  const [graph, setGraph] = React.useState({ x: [], v: [], a: [], t: [] });
   const useStyles = makeStyles((theme) => ({
     btn: {
       margin: "2rem auto",
     },
+    select: {
+      marginLeft: "2rem",
+    },
   }));
+
   const classes = useStyles();
   const changeTab = (event, newValue) => {
     setValue(newValue);
   };
   const handleUpload = (file) => {
-    console.log(file);
     const data = new FormData();
     data.append("file", file);
-    const url = "https://run.mocky.io/v3/eb3937d5-f04e-4222-b61a-0a9e6f3d42d8";
-    axios({
-      method: "GET",
-      url,
-      data,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
-    })
-      .then((res) => {
-        let x = [];
-        let v = [];
-        let a = [];
-        let t = [];
-        res.data.forEach((el) => {
-          x.push(el[0]);
-          v.push(el[1]);
-          a.push(el[2]);
-          t.push(el[3]);
-        });
-        setGraph({x, v, a, t});
-        console.log(graph);
-        setAnalyze(!analyze);
+    console.log(file);
+    data.append("fps", fps);
+    const url = "http://127.0.0.1:5000/upload";
+    if (file) {
+      axios({
+        method: "POST",
+        url,
+        data,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
       })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then(({ data }) => {
+          console.log(data);
+          let x = [];
+          let v = [];
+          let a = [];
+          let t = [];
+          data.forEach((el) => {
+            x.push(el[0]);
+            v.push(el[1]);
+            a.push(el[2]);
+            t.push(el[3]);
+          });
+          console.log(x, v, a, t);
+          setGraph({ x, v, a, t });
+          console.log(graph);
+          setAnalyze(!analyze);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   return (
@@ -83,6 +95,19 @@ function App() {
           >
             Analyze
           </Button>
+          <Select
+            className={classes.select}
+            onChange={(e) => {
+              setFps(e.target.value);
+            }}
+            value={fps}
+          >
+            <MenuItem value={30}>30</MenuItem>
+            <MenuItem value={60}>60</MenuItem>
+            <MenuItem value={90}>90</MenuItem>
+            <MenuItem value={120}>120</MenuItem>
+            <MenuItem value={240}>240</MenuItem>
+          </Select>
           {/* <CircularProgress size={24} className={classes.buttonProgress} /> */}
         </TabPanel>
         <TabPanel value={value} index={1}>

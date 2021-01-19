@@ -15,7 +15,6 @@ export default function Layout({ children }) {
     },
   }));
   const classes = useStyles();
-  console.log(matches);
   return (
     <Box
       width={matches ? "100%" : "70%"}
