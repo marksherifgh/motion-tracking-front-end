@@ -8,6 +8,7 @@ import {
   Button,
   makeStyles,
   Select,
+  CircularProgress,
   MenuItem,
 } from "@material-ui/core";
 import TabPanel from "./components/TabPanel";
@@ -19,6 +20,7 @@ function App() {
   const [value, setValue] = React.useState(0);
   const [fps, setFps] = React.useState(60);
   const [analyze, setAnalyze] = React.useState(false);
+  const [upload, setUpload] = React.useState(false);
   const [graph, setGraph] = React.useState({ x: [], v: [], a: [], t: [] });
   const useStyles = makeStyles((theme) => ({
     btn: {
@@ -38,15 +40,16 @@ function App() {
     data.append("file", file);
     console.log(file);
     data.append("fps", fps);
-    const url = "http://127.0.0.1:5000/upload";
+    const url = "https://motion-tracking-2021.herokuapp.com/upload";
     if (file) {
+      setUpload(true);
       axios({
         method: "POST",
         url,
         data,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-        },
+        // headers: {
+        //   "Access-Control-Allow-Origin": "*",
+        // },
       })
         .then(({ data }) => {
           console.log(data);
@@ -64,6 +67,7 @@ function App() {
           setGraph({ x, v, a, t });
           console.log(graph);
           setAnalyze(!analyze);
+          setUpload(false);
         })
         .catch((err) => {
           console.log(err);
@@ -87,13 +91,13 @@ function App() {
         <TabPanel value={value} index={0}>
           <DropzoneAreaEx onUpload={handleUpload} />
           <Button
-            //disabled={!analyze}
+            disabled={!analyze}
             variant="contained"
             color="primary"
             className={classes.btn}
             onClick={() => setValue(1)}
           >
-            Analyze
+            Show Results
           </Button>
           <Select
             className={classes.select}
@@ -108,6 +112,12 @@ function App() {
             <MenuItem value={120}>120</MenuItem>
             <MenuItem value={240}>240</MenuItem>
           </Select>
+          {upload && (
+            <div>
+              <h3>Analyzing File</h3>
+              <CircularProgress />
+            </div>
+          )}
           {/* <CircularProgress size={24} className={classes.buttonProgress} /> */}
         </TabPanel>
         <TabPanel value={value} index={1}>
