@@ -40,7 +40,7 @@ function App() {
     data.append("file", file);
     console.log(file);
     data.append("fps", fps);
-    const url = "https://motion-tracking-2021.herokuapp.com/upload";
+    const url = "http://127.0.0.1:5000/upload";
     if (file) {
       setUpload(true);
       axios({
