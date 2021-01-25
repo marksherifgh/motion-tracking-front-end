@@ -99,19 +99,19 @@ function App() {
           >
             Show Results
           </Button>
-//           <Select
-//             className={classes.select}
-//             onChange={(e) => {
-//               setFps(e.target.value);
-//             }}
-//             value={fps}
-//           >
-//             <MenuItem value={30}>30</MenuItem>
-//             <MenuItem value={60}>60</MenuItem>
-//             <MenuItem value={90}>90</MenuItem>
-//             <MenuItem value={120}>120</MenuItem>
-//             <MenuItem value={240}>240</MenuItem>
-//           </Select>
+          <Select
+            className={classes.select}
+            onChange={(e) => {
+              setFps(e.target.value);
+            }}
+            value={fps}
+          >
+            <MenuItem value={30}>30</MenuItem>
+            <MenuItem value={60}>60</MenuItem>
+            <MenuItem value={90}>90</MenuItem>
+            <MenuItem value={120}>120</MenuItem>
+            <MenuItem value={240}>240</MenuItem>
+          </Select>
           {upload && (
             <div>
               <h3>Analyzing File</h3>
