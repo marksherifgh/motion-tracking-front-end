@@ -7,9 +7,8 @@ import {
   Typography,
   Button,
   makeStyles,
-  Select,
   CircularProgress,
-  MenuItem,
+  Input,
 } from "@material-ui/core";
 import TabPanel from "./components/TabPanel";
 import Layout from "./components/Layout";
@@ -18,7 +17,8 @@ import DropzoneAreaEx from "./components/DraopZoneAreaEx";
 import Form from "./components/Form";
 function App() {
   const [value, setValue] = React.useState(0);
-  const [fps, setFps] = React.useState(60);
+  const [mass, setMass] = React.useState(60);
+  const [cuttOff, setCuttOff] = React.useState(6);
   const [analyze, setAnalyze] = React.useState(false);
   const [upload, setUpload] = React.useState(false);
   const [graph, setGraph] = React.useState({ x: [], v: [], a: [], t: [] });
@@ -29,8 +29,11 @@ function App() {
     select: {
       marginLeft: "2rem",
     },
+    input: {
+      marginLeft: "2rem",
+    }
   }));
-
+  
   const classes = useStyles();
   const changeTab = (event, newValue) => {
     setValue(newValue);
@@ -38,8 +41,8 @@ function App() {
   const handleUpload = (file) => {
     const data = new FormData();
     data.append("file", file);
-    console.log(file);
-    data.append("fps", fps);
+    data.append("mass", mass);
+    data.append("cuttoff", cuttOff);
     const url = "http://127.0.0.1:5000/upload";
     if (file) {
       setUpload(true);
@@ -52,7 +55,6 @@ function App() {
         // },
       })
         .then(({ data }) => {
-          console.log(data);
           let x = [];
           let v = [];
           let a = [];
@@ -63,9 +65,7 @@ function App() {
             a.push(el[2]);
             t.push(el[3]);
           });
-          console.log(x, v, a, t);
           setGraph({ x, v, a, t });
-          console.log(graph);
           setAnalyze(!analyze);
           setUpload(false);
         })
@@ -99,19 +99,8 @@ function App() {
           >
             Show Results
           </Button>
-          <Select
-            className={classes.select}
-            onChange={(e) => {
-              setFps(e.target.value);
-            }}
-            value={fps}
-          >
-            <MenuItem value={30}>30</MenuItem>
-            <MenuItem value={60}>60</MenuItem>
-            <MenuItem value={90}>90</MenuItem>
-            <MenuItem value={120}>120</MenuItem>
-            <MenuItem value={240}>240</MenuItem>
-          </Select>
+          <Input type="number" className={classes.input} name="mass" placeholder="Mass" onChange={event => setMass(event.target.value)}/>
+          <Input type="number" className={classes.input} name="cutoff" placeholder="Cutoff Frequency" onChange={event => setCuttOff(event.target.value)}/>
           {upload && (
             <div>
               <h3>Analyzing File</h3>
